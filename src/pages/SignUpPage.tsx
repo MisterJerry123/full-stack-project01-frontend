@@ -15,7 +15,6 @@ export function SignUpPage() {
             alert("두 비밀번호가 다릅니다.")
             return
         }
-
         try {
             await signUp({ email, name, password })
 
