@@ -1,5 +1,5 @@
 import './App.css'
-import { LoginPage } from './pages/loginPage'
+import { LoginPage } from './pages/LoginPage'
 
 function App() {
   return <LoginPage/>
