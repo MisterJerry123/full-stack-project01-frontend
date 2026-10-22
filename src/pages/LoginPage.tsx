@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { login } from "../api/auth"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export function LoginPage() {
 
-
+    const navigate = useNavigate()
 
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -13,19 +13,13 @@ export function LoginPage() {
         e.preventDefault()
         try {
             const data = await login({ email, password })
-
             localStorage.setItem("accessToken", data.accessToken)
             alert("로그인 성공!")
+            navigate('/health')
         } catch (error) {
             alert((error as Error).message)
         }
     }
-
-
-
-
-
-
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f5f5f5' }}>
 
@@ -52,11 +46,8 @@ export function LoginPage() {
                     <Link to='/signUp' style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold' }}>
                         회원가입
                     </Link>
-
                 </div>
-
             </form>
-
         </div>
     )
 }

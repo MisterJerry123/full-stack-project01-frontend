@@ -33,3 +33,16 @@ export const signUp = async(data:SignUpRequest)=>{
         throw new Error("회원가입 실패")
     }
 }
+
+export const home=async()=>{
+    const response = await fetch('/health',{
+        method:'GET',
+    })
+    if(response.ok){
+        return
+    }
+    else{
+        throw new Error("페이지 이동 실패")
+    }
+
+}
