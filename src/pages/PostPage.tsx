@@ -26,7 +26,7 @@ export function PostPage() {
 
             {posts.map((post) => (
                 <div key={post.id}
-                    onClick={() => navigate(`/posts/${post.id}`,{state:post})}
+                    onClick={() => navigate(`/posts/${post.id}`, { state: post })}
                     style={{
                         width: '100%',
                         maxWidth: '480px',
@@ -44,6 +44,28 @@ export function PostPage() {
                     </small>
                 </div>
             ))}
+
+            <button
+                onClick={() => {navigate("/posts/create")
+
+                }}
+                style={{
+                    position: "fixed",
+                    bottom: "24px",
+                    padding: "14px 28px",
+                    borderRadius: "999px",
+                    border: "none",
+                    background: "#3b82f6",
+                    color: "white",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)',
+                    cursor: 'pointer'
+                }}
+            >
+                ✏️ 글쓰기
+            </button>
+
         </div>
 
 

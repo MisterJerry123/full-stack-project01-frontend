@@ -1,4 +1,4 @@
-import type { getPostResponse, getPostsResponse, LoginRequest, LoginResponse, SignUpRequest } from "../types/auth";
+import type { getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest } from "../types/auth";
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     const response = await fetch('/api/users/login', {
@@ -84,5 +84,42 @@ export const getPosts = async (page: number): Promise<getPostsResponse> => {
     }
     else {
         throw new Error(`서버 통신 실패 (상태 코드: ${response.status})`)
+    }
+}
+
+export const togglePostLike = async (postId:number): Promise<postLikeResponse>=>{
+
+    const token = localStorage.getItem(`accessToken`)
+    const response = await fetch(`/api/posts/${postId}/likes`, {
+        method:"POST",
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+
+    if(response.ok){
+        return response.json()
+    }
+    else{
+        throw new Error("좋아요 실패")
+    }
+}
+
+export const createPost = async(data:PostRequest)=>{
+    const token = localStorage.getItem('accessToken')
+    const response = await fetch('/api/posts',{
+        method:"POST",
+        headers:{
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+
+        },
+        body: JSON.stringify(data)
+    })
+    if(response.ok){
+        return
+    }
+    else{
+        throw new Error("게시글 생성 오류")
     }
 }

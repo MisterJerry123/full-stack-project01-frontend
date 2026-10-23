@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { getPostResponse } from "../types/auth";
-import { getPost } from "../api/auth";
+import { getPost, togglePostLike } from "../api/auth";
 
 export function PostDetailPage() {
     const { postId } = useParams()
@@ -9,6 +9,21 @@ export function PostDetailPage() {
     const location = useLocation()
 
     const [post, setPost] = useState<getPostResponse | null>(location.state)
+
+    const handlePostLike = async () => {
+        try {
+            const data = await togglePostLike(Number(postId))
+            if (post) {
+                setPost({
+                    ...post,
+                    isLiked: data.status,
+                    totalLikes: data.totalLikes
+                })
+            }
+        } catch (error) {
+            alert((error as Error).message)
+        }
+    }
 
     useEffect(() => {
         getPost(Number(postId))
@@ -73,9 +88,10 @@ export function PostDetailPage() {
                 <div style={{
                     borderTop: "1px solid #eee",
                     paddingTop: "16px",
-                    marginTop: "20px"
+                    marginTop: "20px",
+                    cursor: "pointer"
                 }}>
-                    <span>{post?.isLiked ? '❤️' : '🤍'} 좋아요 {post?.totalLikes}개 </span>
+                    <span onClick={handlePostLike}>{post?.isLiked ? '❤️' : '🤍'} 좋아요 {post?.totalLikes}개 </span>
                 </div>
             </div>
         </div>
