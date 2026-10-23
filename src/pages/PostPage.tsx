@@ -14,14 +14,17 @@ export function PostPage() {
             })
             .catch((error) => {
                 alert((error as Error).message)
+                if (!localStorage.getItem('accessToken')) {
+                    navigate('/login')
+                }
             })
     }, [])
 
     return (
-        <div style={{ display: 'flex', flexDirection: "column", gap: '16px', justifyContent: 'center', alignItems: 'center', minHeight: '100vh',padding:'24px', background: '#f5f5f5' }}>
+        <div style={{ display: 'flex', flexDirection: "column", gap: '16px', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: '24px', background: '#f5f5f5' }}>
             <h2>게시글 화면</h2>
 
-          {posts.map((post, index) => (
+            {posts.map((post, index) => (
                 <div key={index} style={{
                     width: '100%',
                     maxWidth: '480px',

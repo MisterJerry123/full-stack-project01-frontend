@@ -49,10 +49,10 @@ export const home = async () => {
 
 export const getPost = async (postId: number): Promise<getPostResponse> => {
     const token = localStorage.getItem('accessToken')
-    const response = await fetch(`api/posts/${postId}`, {
+    const response = await fetch(`/api/posts/${postId}`, {
         method: 'GET',
         headers: {
-            'Authrization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
         }
     })
     if (response.ok) {
@@ -65,7 +65,11 @@ export const getPost = async (postId: number): Promise<getPostResponse> => {
 
 export const getPosts = async (page: number): Promise<getPostsResponse> => {
     const token = localStorage.getItem(`accessToken`)
-    const response = await fetch(`api/posts?page=${page}`, {
+    if (!token) {
+        localStorage.removeItem('accessToken')
+        throw new Error("로그인이 필요합니다!")
+    }
+    const response = await fetch(`/api/posts?page=${page}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
@@ -74,7 +78,11 @@ export const getPosts = async (page: number): Promise<getPostsResponse> => {
     if (response.ok) {
         return response.json()
     }
+    else if (response.status == 401) {
+        localStorage.removeItem('accessToken')
+        throw new Error("로그인이 필요합니다!")
+    }
     else {
-        throw new Error("getPosts 실패")
+        throw new Error(`서버 통신 실패 (상태 코드: ${response.status})`)
     }
 }
