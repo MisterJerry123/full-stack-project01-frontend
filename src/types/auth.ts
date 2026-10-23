@@ -12,3 +12,20 @@ export interface SignUpRequest{
   password:string
   name:string
 }
+export interface getPostResponse{
+  title:string
+  content:string
+  authorName:string
+  createdAt:string
+  updatedAt:string
+  imageUrl?:string | null
+  totalLikes:number
+  isLiked:boolean
+}
+
+export interface getPostsResponse{
+  posts: getPostResponse[]
+  totalPages:number
+  totalElements:number
+  currentPage:number
+}

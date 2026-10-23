@@ -15,7 +15,7 @@ export function LoginPage() {
             const data = await login({ email, password })
             localStorage.setItem("accessToken", data.accessToken)
             alert("로그인 성공!")
-            navigate('/health')
+            navigate('/posts')
         } catch (error) {
             alert((error as Error).message)
         }
