@@ -13,6 +13,7 @@ export interface SignUpRequest{
   name:string
 }
 export interface getPostResponse{
+  id:number
   title:string
   content:string
   authorName:string

@@ -3,6 +3,7 @@ import './App.css'
 import { LoginPage } from './pages/LoginPage'
 import { SignUpPage } from './pages/SignUpPage'
 import { PostPage } from './pages/PostPage'
+import { PostDetailPage } from './pages/PostDetailPage'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path='/login' element={<LoginPage />}></Route>
         <Route path='/signUp' element={<SignUpPage />}></Route>
         <Route path='/posts' element={<PostPage />}></Route>
+        <Route path='/posts/:postId' element={<PostDetailPage/>}></Route>
         <Route path='*' element={<LoginPage />}></Route>
       </Routes>
     </BrowserRouter>
