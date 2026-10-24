@@ -1,4 +1,4 @@
-import type { getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest } from "../types/auth";
+import type { GetCommentResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest } from "../types/auth";
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     const response = await fetch('/api/users/login', {
@@ -122,4 +122,22 @@ export const createPost = async(data:PostRequest)=>{
     else{
         throw new Error("게시글 생성 오류")
     }
+}
+
+export const getComments = async(postId:number):Promise<GetCommentResponse[]>=>{
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch(`/api/posts/${postId}/comments`,{
+        method:"GET",
+        headers:{
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    if(response.ok){
+        return response.json()
+        
+    }
+    else{
+        throw new Error("댓글 받아오기 오류")
+    }
+
 }

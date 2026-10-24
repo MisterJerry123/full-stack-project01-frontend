@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { getPostResponse } from "../types/auth";
-import { getPost, togglePostLike } from "../api/auth";
+import type { GetCommentResponse, getPostResponse } from "../types/auth";
+import { getComments, getPost, togglePostLike } from "../api/auth";
 
 export function PostDetailPage() {
     const { postId } = useParams()
@@ -9,6 +9,7 @@ export function PostDetailPage() {
     const location = useLocation()
 
     const [post, setPost] = useState<getPostResponse | null>(location.state)
+    const [comments, setComments] = useState<GetCommentResponse[]>([])
 
     const handlePostLike = async () => {
         try {
@@ -25,9 +26,29 @@ export function PostDetailPage() {
         }
     }
 
+    // const handlerGetComments = async()=>{
+    //     try{
+    //         const data = await getComments(Number(postId))
+    //         if(post){
+    //             setComments(data)
+    //         }
+
+    //     }catch(error){
+    //         alert((error as Error).message)
+    //     }
+    // }
+
     useEffect(() => {
         getPost(Number(postId))
             .then((data) => setPost(data))
+            .catch((error) => {
+                throw new Error("에러 발생")
+            })
+    }, [postId])
+
+    useEffect(() => {
+        getComments(Number(postId))
+            .then((data) => setComments(data))
             .catch((error) => {
                 throw new Error("에러 발생")
             })
@@ -89,16 +110,23 @@ export function PostDetailPage() {
                     borderTop: "1px solid #eee",
                     paddingTop: "16px",
                     marginTop: "20px",
-                    cursor: "pointer"
+
                 }}>
-                    <span onClick={handlePostLike}>{post?.isLiked ? '❤️' : '🤍'} 좋아요 {post?.totalLikes}개 </span>
+                    <span style={{ cursor: "pointer" }} onClick={handlePostLike}>{post?.isLiked ? '❤️' : '🤍'}</span>
+                    <span> 좋아요 {post?.totalLikes}개 </span>
+                    <span>| 댓글 {comments.length}개 </span>
+
+                </div>
+
+                <div>
+                    {comments.map(comment => (
+                        <div key={comment.id}>
+                            <small>{comment.content}</small>
+                        </div>
+                    ))
+                    }
                 </div>
             </div>
         </div>
-
-
-
     )
-
-
 }
