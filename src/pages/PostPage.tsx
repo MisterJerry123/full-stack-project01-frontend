@@ -21,7 +21,7 @@ export function PostPage() {
     }, [])
 
     return (
-        <div style={{ display: 'flex', flexDirection: "column", gap: '16px', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: '24px', background: '#f5f5f5' }}>
+        <div style={{ display: 'flex', flexDirection: "column", gap: '16px', alignItems: 'center', minHeight: '100vh', padding: '24px', background: '#f5f5f5' }}>
             <h2>게시글 화면</h2>
 
             {posts.map((post) => (
