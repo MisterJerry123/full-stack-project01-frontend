@@ -40,7 +40,7 @@ export function PostPage() {
                     <h3 style={{ margin: '0 0 8px 0' }}>{post.title}</h3>
                     <p style={{ margin: '0 0 12px 0', color: '#444' }}>{post.content}</p>
                     <small style={{ color: '#888' }}>
-                        작성자: {post.authorName} | {post.isLiked ? '❤️' : '🤍'} {post.totalLikes}
+                        {post.isLiked ? '❤️' : '🤍'} {post.totalLikes}개 | 💬 {post.totalComments}개 | {post.authorName}
                     </small>
                 </div>
             ))}

@@ -22,6 +22,7 @@ export interface getPostResponse {
   imageUrl?: string | null
   totalLikes: number
   isLiked: boolean
+  totalComments:number
 }
 
 export interface getPostsResponse {
