@@ -15,6 +15,8 @@ function App() {
         <Route path='/posts' element={<PostPage />}></Route>
         <Route path='/posts/:postId' element={<PostDetailPage />}></Route>
         <Route path='/posts/create' element={<CreatePostPage />}></Route>
+        <Route path='/posts/:postId/comments' element={<PostDetailPage />}></Route>
+
 
         <Route path='*' element={<LoginPage />}></Route>
       </Routes>

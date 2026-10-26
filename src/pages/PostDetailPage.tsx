@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { GetCommentResponse, getPostResponse } from "../types/auth";
-import { getComments, getPost, togglePostLike } from "../api/auth";
+import { createComment, getComments, getPost, togglePostLike } from "../api/auth";
 
 export function PostDetailPage() {
     const { postId } = useParams()
@@ -10,6 +10,7 @@ export function PostDetailPage() {
 
     const [post, setPost] = useState<getPostResponse | null>(location.state)
     const [comments, setComments] = useState<GetCommentResponse[]>([])
+    const [comment, setComment] = useState<string>("")
 
     const handlePostLike = async () => {
         try {
@@ -21,6 +22,17 @@ export function PostDetailPage() {
                     totalLikes: data.totalLikes
                 })
             }
+        } catch (error) {
+            alert((error as Error).message)
+        }
+    }
+
+    const handleCreatePost = async () => {
+        try {
+            const data = await createComment(Number(postId), comment)
+            setComment("")
+            const updated = await getComments(Number(postId))
+            setComments(updated)
         } catch (error) {
             alert((error as Error).message)
         }
@@ -125,6 +137,30 @@ export function PostDetailPage() {
                         </div>
                     ))
                     }
+                </div>
+
+                <div style={{
+                    display: "flex", width: "100%", gap: "8px", paddingTop: "10px",
+                }}>
+
+                    <input style={{
+                        flex: "1",
+                        minWidth: 0,
+                        padding: "10px 12px",
+                        fontSize: "15px",
+                        borderRadius: "8px",
+                        border: "1px solid #ddd"
+                    }} onChange={(e) => { setComment(e.target.value) }} value={comment} placeholder="댓글을 입력해주세요."></input>
+                    <button style={{
+                        whiteSpace: "nowrap",
+                        padding: "10px 16px",
+                        borderRadius: "8px",
+                        border: "none",
+                        background: "#3b82f6",
+                        color: "white",
+                        fontWeight: "bold",
+                        cursor: "pointer"
+                    }} onClick={handleCreatePost}>작성</button>
                 </div>
             </div>
         </div>

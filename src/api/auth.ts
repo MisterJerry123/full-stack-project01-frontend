@@ -141,3 +141,22 @@ export const getComments = async(postId:number):Promise<GetCommentResponse[]>=>{
     }
 
 }
+
+export const createComment = async(postId:number, comment:string)=>{
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch(`/api/posts/${postId}/comments`,{
+        method:"POST",
+        headers:{
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+
+        },
+        body:JSON.stringify({comment})
+    })
+    if(response.ok){
+        return
+    }
+    else{
+       throw new Error("댓글 작성 실패") 
+    }
+}
