@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { GetCommentResponse, getPostResponse } from "../types/auth";
-import { createComment, getComments, getPost, togglePostLike } from "../api/auth";
+import { createComment, deletePost, getComments, getPost, togglePostLike } from "../api/auth";
 
 export function PostDetailPage() {
     const { postId } = useParams()
@@ -33,6 +33,16 @@ export function PostDetailPage() {
             setComment("")
             const updated = await getComments(Number(postId))
             setComments(updated)
+        } catch (error) {
+            alert((error as Error).message)
+        }
+    }
+
+    const handleDeletePost = async () => {
+        if (!window.confirm("정말 삭제하시겠습니까?")) return
+        try {
+            const response = await deletePost(Number(postId))
+            navigate('/posts')
         } catch (error) {
             alert((error as Error).message)
         }
@@ -107,7 +117,23 @@ export function PostDetailPage() {
                         margin: "0 0 8px 0",
                         fontSize: "22px"
                     }}>{post?.title}</h2>
-                    <small>작성자:{post?.authorName} | 작성일: {(post?.createdAt)?.slice(0, 10)}</small>
+                    <div style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                    }}>
+                        <small>작성자:{post?.authorName} | 작성일: {(post?.createdAt)?.slice(0, 10)}</small>
+                        <button style={{
+                            padding: "6px 12px",
+                            fontSize: "13px",
+                            fontWeight: "bold",
+                            color: "#ef4444",
+                            background: "#fef2f2",
+                            border: "1px solid #fecaca",
+                            borderRadius: "6px",
+                            cursor: "pointer"
+                        }} onClick={() => { handleDeletePost() }}>삭제</button>
+                    </div>
                 </div>
                 <p style={{
                     minHeight: "160px",

@@ -160,3 +160,23 @@ export const createComment = async(postId:number, comment:string)=>{
        throw new Error("댓글 작성 실패") 
     }
 }
+
+export const deletePost = async(postId:number)=>{
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch(`/api/posts/${postId}`,{
+        method:"DELETE",
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+
+    if(response.ok){
+        
+    }
+    else if(response.status==403){
+        throw new Error("본인 게시글만 삭제할 수 있습니다.")
+    }
+    else{
+        throw new Error("게시글 삭제 실패")
+    }
+}
