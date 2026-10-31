@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { GetCommentResponse, getPostResponse } from "../types/auth";
-import { createComment, deletePost, getComments, getPost, togglePostLike } from "../api/auth";
+import { createComment, deletePost, getComments, getPost, togglePostLike, updatePost } from "../api/auth";
 
 export function PostDetailPage() {
     const { postId } = useParams()
@@ -46,6 +46,10 @@ export function PostDetailPage() {
         } catch (error) {
             alert((error as Error).message)
         }
+    }
+
+    const handleUpdatePost = async()=>{
+        navigate(`/posts/${postId}/update`, {state:post})
     }
 
     // const handlerGetComments = async()=>{
@@ -123,17 +127,33 @@ export function PostDetailPage() {
                         alignItems: "center"
                     }}>
                         <small>작성자:{post?.authorName} | 작성일: {(post?.createdAt)?.slice(0, 10)}</small>
-                        <button style={{
-                            padding: "6px 12px",
-                            fontSize: "13px",
-                            fontWeight: "bold",
-                            color: "#ef4444",
-                            background: "#fef2f2",
-                            border: "1px solid #fecaca",
-                            borderRadius: "6px",
-                            cursor: "pointer"
-                        }} onClick={() => { handleDeletePost() }}>삭제</button>
+                        <div>
+                            <button style={{
+                                padding: "6px 12px",
+                                fontSize: "13px",
+                                fontWeight: "bold",
+                                color: "#444fef",
+                                background: "#f2f4fe",
+                                border: "1px solid #dacafe",
+                                borderRadius: "6px",
+                                cursor: "pointer",
+                                marginRight:"10px"
+
+                            }} onClick={() => { handleUpdatePost() }}>수정</button>
+                            <button style={{
+                                padding: "6px 12px",
+                                fontSize: "13px",
+                                fontWeight: "bold",
+                                color: "#ef4444",
+                                background: "#fef2f2",
+                                border: "1px solid #fecaca",
+                                borderRadius: "6px",
+                                cursor: "pointer"
+                            }} onClick={() => { handleDeletePost() }}>삭제</button>
+                        </div>
                     </div>
+
+
                 </div>
                 <p style={{
                     minHeight: "160px",

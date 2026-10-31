@@ -87,96 +87,117 @@ export const getPosts = async (page: number): Promise<getPostsResponse> => {
     }
 }
 
-export const togglePostLike = async (postId:number): Promise<postLikeResponse>=>{
+export const togglePostLike = async (postId: number): Promise<postLikeResponse> => {
 
     const token = localStorage.getItem(`accessToken`)
     const response = await fetch(`/api/posts/${postId}/likes`, {
-        method:"POST",
-        headers:{
-            'Authorization':`Bearer ${token}`
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${token}`
         }
     })
 
-    if(response.ok){
+    if (response.ok) {
         return response.json()
     }
-    else{
+    else {
         throw new Error("좋아요 실패")
     }
 }
 
-export const createPost = async(data:PostRequest)=>{
+export const createPost = async (data: PostRequest) => {
     const token = localStorage.getItem('accessToken')
-    const response = await fetch('/api/posts',{
-        method:"POST",
-        headers:{
+    const response = await fetch('/api/posts', {
+        method: "POST",
+        headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
 
         },
         body: JSON.stringify(data)
     })
-    if(response.ok){
+    if (response.ok) {
         return
     }
-    else{
+    else {
         throw new Error("게시글 생성 오류")
     }
 }
 
-export const getComments = async(postId:number):Promise<GetCommentResponse[]>=>{
+export const getComments = async (postId: number): Promise<GetCommentResponse[]> => {
     const token = localStorage.getItem("accessToken")
-    const response = await fetch(`/api/posts/${postId}/comments`,{
-        method:"GET",
-        headers:{
+    const response = await fetch(`/api/posts/${postId}/comments`, {
+        method: "GET",
+        headers: {
             'Authorization': `Bearer ${token}`
         }
     })
-    if(response.ok){
+    if (response.ok) {
         return response.json()
-        
+
     }
-    else{
+    else {
         throw new Error("댓글 받아오기 오류")
     }
 
 }
 
-export const createComment = async(postId:number, comment:string)=>{
+export const createComment = async (postId: number, comment: string) => {
     const token = localStorage.getItem("accessToken")
-    const response = await fetch(`/api/posts/${postId}/comments`,{
-        method:"POST",
-        headers:{
+    const response = await fetch(`/api/posts/${postId}/comments`, {
+        method: "POST",
+        headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
 
         },
-        body:JSON.stringify({comment})
+        body: JSON.stringify({ comment })
+    })
+    if (response.ok) {
+        return
+    }
+    else {
+        throw new Error("댓글 작성 실패")
+    }
+}
+
+export const deletePost = async (postId: number) => {
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch(`/api/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+
+    if (response.ok) {
+
+    }
+    else if (response.status == 403) {
+        throw new Error("본인 게시글만 삭제할 수 있습니다.")
+    }
+    else {
+        throw new Error("게시글 삭제 실패")
+    }
+}
+
+export const updatePost = async (postId: number, data:PostRequest) => {
+
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch(`/api/posts/${postId}`, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        
+        body: JSON.stringify(data)
     })
     if(response.ok){
         return
     }
     else{
-       throw new Error("댓글 작성 실패") 
+        throw new Error("게시글 수정 실패")
     }
-}
 
-export const deletePost = async(postId:number)=>{
-    const token = localStorage.getItem("accessToken")
-    const response = await fetch(`/api/posts/${postId}`,{
-        method:"DELETE",
-        headers:{
-            'Authorization':`Bearer ${token}`
-        }
-    })
-
-    if(response.ok){
-        
-    }
-    else if(response.status==403){
-        throw new Error("본인 게시글만 삭제할 수 있습니다.")
-    }
-    else{
-        throw new Error("게시글 삭제 실패")
-    }
 }
