@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { GetCommentResponse, getPostResponse } from "../types/auth";
-import { createComment, deletePost, getComments, getPost, togglePostLike, updatePost } from "../api/auth";
+import { createComment, deleteComment, deletePost, getComments, getPost, togglePostLike, updatePost } from "../api/auth";
 
 export function PostDetailPage() {
     const { postId } = useParams()
@@ -50,6 +50,16 @@ export function PostDetailPage() {
 
     const handleUpdatePost = async () => {
         navigate(`/posts/${postId}/update`, { state: post })
+    }
+    const handleDeleteComment = async (commentId: number) => {
+        if (!window.confirm("정말 삭제하시겠습니까?")) return
+        try {
+            const response = await deleteComment(Number(postId), commentId)
+            setComments(comments.filter((comment) => comment.id !== commentId))
+        }
+        catch (error) {
+            alert((error as Error).message)
+        }
     }
 
     // const handlerGetComments = async()=>{
@@ -179,7 +189,19 @@ export function PostDetailPage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px", margin: "16px 0" }}>
                     {comments.map(comment => (
                         <div key={comment.id} style={{ padding: "12px", background: "#f8f9fa", borderRadius: "8px" }}>
-                            <h3 style={{ fontSize: "14px", marginBottom: "4px" }}>{comment.authorName}</h3>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <h3 style={{ fontSize: "14px", marginBottom: "4px" }}>{comment.authorName}</h3>
+                                <button style={{
+                                    padding: "6px 12px",
+                                    fontSize: "13px",
+                                    fontWeight: "bold",
+                                    color: "#ef4444",
+                                    background: "#fef2f2",
+                                    border: "1px solid #fecaca",
+                                    borderRadius: "6px",
+                                    cursor: "pointer"
+                                }} onClick={() => { handleDeleteComment(comment.id) }}>삭제</button>
+                            </div>
                             <small style={{ fontSize: '15px' }}>{comment.content}</small>
                             <br></br>
                             <small style={{ fontSize: "12px", color: "#999" }}>{comment.createdAt.slice(0, 10)}</small>

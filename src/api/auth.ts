@@ -205,3 +205,22 @@ export const updatePost = async (postId: number, data: PostRequest) => {
     }
 
 }
+
+export const deleteComment = async (postId: number, commentId: number) => {
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch(`/api/posts/${postId}/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    if (response.ok) {
+        return
+    }
+    else if (response.status == 403) {
+        throw new Error("본인이 작성한 댓글만 삭제할 수 있습니다.")
+    }
+    else{
+        throw new Error("댓글 삭제 실패")
+    }
+}
