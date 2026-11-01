@@ -48,8 +48,8 @@ export function PostDetailPage() {
         }
     }
 
-    const handleUpdatePost = async()=>{
-        navigate(`/posts/${postId}/update`, {state:post})
+    const handleUpdatePost = async () => {
+        navigate(`/posts/${postId}/update`, { state: post })
     }
 
     // const handlerGetComments = async()=>{
@@ -137,7 +137,7 @@ export function PostDetailPage() {
                                 border: "1px solid #dacafe",
                                 borderRadius: "6px",
                                 cursor: "pointer",
-                                marginRight:"10px"
+                                marginRight: "10px"
 
                             }} onClick={() => { handleUpdatePost() }}>수정</button>
                             <button style={{
@@ -176,10 +176,15 @@ export function PostDetailPage() {
 
                 </div>
 
-                <div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px", margin: "16px 0" }}>
                     {comments.map(comment => (
-                        <div key={comment.id}>
-                            <small>{comment.content}</small>
+                        <div key={comment.id} style={{ padding: "12px", background: "#f8f9fa", borderRadius: "8px" }}>
+                            <h3 style={{ fontSize: "14px", marginBottom: "4px" }}>{comment.authorName}</h3>
+                            <small style={{ fontSize: '15px' }}>{comment.content}</small>
+                            <br></br>
+                            <small style={{ fontSize: "12px", color: "#999" }}>{comment.createdAt.slice(0, 10)}</small>
+                            <small style={{ fontSize: "12px", color: "#999" }}>{" "}</small>
+                            <small style={{ fontSize: "12px", color: "#999" }}>{comment.createdAt.slice(11, 16)}</small>
                         </div>
                     ))
                     }

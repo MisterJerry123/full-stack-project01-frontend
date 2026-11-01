@@ -22,7 +22,7 @@ export interface getPostResponse {
   imageUrl?: string | null
   totalLikes: number
   isLiked: boolean
-  totalComments:number
+  totalComments: number
 }
 
 export interface getPostsResponse {
@@ -42,10 +42,11 @@ export interface PostRequest {
   content: string | null,
   imageUrl: string | null
 }
-export interface GetCommentResponse{
-  id:number,
-  content:string,
-  authorId:number,
-  createdAt:string,
-  updatedAt:string,
+export interface GetCommentResponse {
+  id: number,
+  content: string,
+  authorName: string,
+  authorId: number,
+  createdAt: string,
+  updatedAt: string,
 }
