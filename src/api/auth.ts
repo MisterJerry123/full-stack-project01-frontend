@@ -220,7 +220,34 @@ export const deleteComment = async (postId: number, commentId: number) => {
     else if (response.status == 403) {
         throw new Error("본인이 작성한 댓글만 삭제할 수 있습니다.")
     }
-    else{
+    else {
         throw new Error("댓글 삭제 실패")
+    }
+}
+
+export const updateComment = async (comment: string, postId: number, commentId: number) => {
+    const token = localStorage.getItem("accessToken")
+
+    const response = await fetch(`/api/posts/${postId}/comments/${commentId}`, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ comment })
+    })
+    if (response.ok) {
+        return
+    }
+    else if (response.status == 400) {
+        throw new Error("댓글 입력값은 필수 입니다.")
+
+    }
+    else if (response.status == 403) {
+        throw new Error("본인 댓글만 수정할 수 있습니다.")
+
+    }
+    else {
+        throw new Error("댓글 수정 실패")
     }
 }
