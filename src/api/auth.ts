@@ -100,6 +100,10 @@ export const togglePostLike = async (postId: number): Promise<postLikeResponse> 
     if (response.ok) {
         return response.json()
     }
+    else if (response.status == 400) {
+        throw new Error("본인의 게시글에는 좋아요를 할 수 없습니다.")
+
+    }
     else {
         throw new Error("좋아요 실패")
     }
@@ -181,7 +185,7 @@ export const deletePost = async (postId: number) => {
     }
 }
 
-export const updatePost = async (postId: number, data:PostRequest) => {
+export const updatePost = async (postId: number, data: PostRequest) => {
 
     const token = localStorage.getItem("accessToken")
     const response = await fetch(`/api/posts/${postId}`, {
@@ -190,13 +194,13 @@ export const updatePost = async (postId: number, data:PostRequest) => {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        
+
         body: JSON.stringify(data)
     })
-    if(response.ok){
+    if (response.ok) {
         return
     }
-    else{
+    else {
         throw new Error("게시글 수정 실패")
     }
 
