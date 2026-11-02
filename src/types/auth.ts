@@ -16,7 +16,8 @@ export interface getPostResponse {
   id: number
   title: string
   content: string
-  authorName: string
+  authorName: string,
+  authorId:number,
   createdAt: string
   updatedAt: string
   imageUrl?: string | null

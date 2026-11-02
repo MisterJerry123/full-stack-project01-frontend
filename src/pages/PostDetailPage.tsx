@@ -106,6 +106,9 @@ export function PostDetailPage() {
             })
     }, [postId])
 
+    const token = localStorage.getItem("accessToken")?.split(".")[1]
+    const userId = token ?
+        Number(JSON.parse(atob(token)).sub) : null
     return (
         <div style={{
             display: "flex",
@@ -153,30 +156,34 @@ export function PostDetailPage() {
                         alignItems: "center"
                     }}>
                         <small>작성자:{post?.authorName} | 작성일: {(post?.createdAt)?.slice(0, 10)}</small>
-                        <div>
-                            <button style={{
-                                padding: "6px 12px",
-                                fontSize: "13px",
-                                fontWeight: "bold",
-                                color: "#444fef",
-                                background: "#f2f4fe",
-                                border: "1px solid #dacafe",
-                                borderRadius: "6px",
-                                cursor: "pointer",
-                                marginRight: "10px"
+                        {post?.authorId === userId && (
+                            <div>
+                                <button style={{
+                                    padding: "6px 12px",
+                                    fontSize: "13px",
+                                    fontWeight: "bold",
+                                    color: "#444fef",
+                                    background: "#f2f4fe",
+                                    border: "1px solid #dacafe",
+                                    borderRadius: "6px",
+                                    cursor: "pointer",
+                                    marginRight: "10px"
 
-                            }} onClick={() => { handleUpdatePost() }}>수정</button>
-                            <button style={{
-                                padding: "6px 12px",
-                                fontSize: "13px",
-                                fontWeight: "bold",
-                                color: "#ef4444",
-                                background: "#fef2f2",
-                                border: "1px solid #fecaca",
-                                borderRadius: "6px",
-                                cursor: "pointer"
-                            }} onClick={() => { handleDeletePost() }}>삭제</button>
-                        </div>
+                                }} onClick={() => { handleUpdatePost() }}>수정</button>
+                                <button style={{
+                                    padding: "6px 12px",
+                                    fontSize: "13px",
+                                    fontWeight: "bold",
+                                    color: "#ef4444",
+                                    background: "#fef2f2",
+                                    border: "1px solid #fecaca",
+                                    borderRadius: "6px",
+                                    cursor: "pointer"
+                                }} onClick={() => { handleDeletePost() }}>삭제</button>
+                            </div>
+                        )
+                        }
+
                     </div>
 
 
