@@ -221,70 +221,70 @@ export function PostDetailPage() {
                         <div key={comment.id} style={{ padding: "12px", background: "#f8f9fa", borderRadius: "8px" }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <h3 style={{ fontSize: "14px", marginBottom: "4px" }}>{comment.authorName}</h3>
-                                <div>
-                                    {editingComment === comment.id ? (
-                                        <button style={{
-                                            padding: "6px 12px",
-                                            fontSize: "13px",
-                                            fontWeight: "bold",
-                                            color: "#444fef",
-                                            background: "#f2f4fe",
-                                            border: "1px solid #dacafe",
-                                            borderRadius: "6px",
-                                            cursor: "pointer",
-                                            marginRight: "10px"
+                                {comment.authorId === userId && (
+                                    <div>
+                                        {editingComment === comment.id ? (
+                                            <button style={{
+                                                padding: "6px 12px",
+                                                fontSize: "13px",
+                                                fontWeight: "bold",
+                                                color: "#444fef",
+                                                background: "#f2f4fe",
+                                                border: "1px solid #dacafe",
+                                                borderRadius: "6px",
+                                                cursor: "pointer",
+                                                marginRight: "10px"
 
-                                        }} onClick={() => {
-                                            handleUpdateComment(editingContent, Number(postId), comment.id)
+                                            }} onClick={() => {
+                                                handleUpdateComment(editingContent, Number(postId), comment.id)
 
-                                        }}>수정</button>
-                                    ) : (
-                                        <button style={{
-                                            padding: "6px 12px",
-                                            fontSize: "13px",
-                                            fontWeight: "bold",
-                                            color: "#444fef",
-                                            background: "#f2f4fe",
-                                            border: "1px solid #dacafe",
-                                            borderRadius: "6px",
-                                            cursor: "pointer",
-                                            marginRight: "10px"
+                                            }}>수정</button>
+                                        ) : (
+                                            <button style={{
+                                                padding: "6px 12px",
+                                                fontSize: "13px",
+                                                fontWeight: "bold",
+                                                color: "#444fef",
+                                                background: "#f2f4fe",
+                                                border: "1px solid #dacafe",
+                                                borderRadius: "6px",
+                                                cursor: "pointer",
+                                                marginRight: "10px"
 
-                                        }} onClick={() => {
-                                            setEditingComment(comment.id)
-                                            setEditingContent(comment.content)
-                                        }}>수정</button>
-                                    )
-                                    }
-
-                                    {editingComment === comment.id ? (
-                                        <button style={{
-                                            padding: "6px 12px",
-                                            fontSize: "13px",
-                                            fontWeight: "bold",
-                                            color: "#ef4444",
-                                            background: "#fef2f2",
-                                            border: "1px solid #fecaca",
-                                            borderRadius: "6px",
-                                            cursor: "pointer"
-                                        }} onClick={() => {
-                                            setEditingComment(0)
-                                            setEditingContent("")
-                                        }}>취소</button>
-                                    ) : (
-                                        <button style={{
-                                            padding: "6px 12px",
-                                            fontSize: "13px",
-                                            fontWeight: "bold",
-                                            color: "#ef4444",
-                                            background: "#fef2f2",
-                                            border: "1px solid #fecaca",
-                                            borderRadius: "6px",
-                                            cursor: "pointer"
-                                        }} onClick={() => { handleDeleteComment(comment.id) }}>삭제</button>)
-                                    }
-
-                                </div>
+                                            }} onClick={() => {
+                                                setEditingComment(comment.id)
+                                                setEditingContent(comment.content)
+                                            }}>수정</button>
+                                        )
+                                        }
+                                        {editingComment === comment.id ? (
+                                            <button style={{
+                                                padding: "6px 12px",
+                                                fontSize: "13px",
+                                                fontWeight: "bold",
+                                                color: "#ef4444",
+                                                background: "#fef2f2",
+                                                border: "1px solid #fecaca",
+                                                borderRadius: "6px",
+                                                cursor: "pointer"
+                                            }} onClick={() => {
+                                                setEditingComment(0)
+                                                setEditingContent("")
+                                            }}>취소</button>
+                                        ) : (
+                                            <button style={{
+                                                padding: "6px 12px",
+                                                fontSize: "13px",
+                                                fontWeight: "bold",
+                                                color: "#ef4444",
+                                                background: "#fef2f2",
+                                                border: "1px solid #fecaca",
+                                                borderRadius: "6px",
+                                                cursor: "pointer"
+                                            }} onClick={() => { handleDeleteComment(comment.id) }}>삭제</button>)
+                                        }
+                                    </div>
+                                )}
                             </div>
                             {editingComment === comment.id ? (
                                 <input value={editingContent} onChange={(e) => { setEditingContent(e.target.value) }} style={{ fontSize: '15px' }} />
