@@ -251,3 +251,24 @@ export const updateComment = async (comment: string, postId: number, commentId: 
         throw new Error("댓글 수정 실패")
     }
 }
+
+export const uploadImage = async(file:File)=>{
+    const token = localStorage.getItem("accessToken")
+    const formData = new FormData()
+    formData.append("file", file)
+
+    const response = await fetch(`/api/images`, {
+        method: 'POST',
+        headers:{
+            'Authorization': `Bearer ${token}`
+        },
+        body:formData
+    })
+
+    if(response.ok){
+        return response.json()
+    }
+    else{
+        throw new Error("이미지 업로드 실패")
+    }
+}

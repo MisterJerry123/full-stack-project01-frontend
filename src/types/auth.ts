@@ -50,3 +50,6 @@ export interface GetCommentResponse {
   createdAt: string,
   updatedAt: string,
 }
+export interface UploadImageResponse{
+  imageUrl:string
+}

@@ -181,8 +181,15 @@ export function PostDetailPage() {
 
 
                 </div>
+                {post?.imageUrl && (
+                    <img
+                        src={post.imageUrl}
+                        alt="게시글 이미지"
+                        style={{ maxWidth: "100%", borderRadius: "8px", marginBottom: "16px" }}
+                    />
+                )}
                 <p style={{
-                    minHeight: "160px",
+                    minHeight: "100px",
                     lineHeight: "1.6",
                     whiteSpace: "pre-wrap",
                     color: "#333"

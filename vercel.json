@@ -5,6 +5,10 @@
       "destination": "https://misterjerry-fullstackproject01.duckdns.org/api/:path*"
     },
     {
+      "source": "/uploads/:path*",
+      "destination": "https://misterjerry-fullstackproject01.duckdns.org/uploads/:path*"
+    },
+    {
       "source": "/:path*",
       "destination": "/index.html"
     }

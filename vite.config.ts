@@ -11,6 +11,11 @@ export default defineConfig({
         target:'https://misterjerry-fullstackproject01.duckdns.org',
         //target:'http://localhost:8080',
         changeOrigin:true
+      },
+      '/uploads':{
+        target:'https://misterjerry-fullstackproject01.duckdns.org',
+        //target: 'http://localhost:8080',
+        changeOrigin: true
       }
     }
   }
