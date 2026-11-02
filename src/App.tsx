@@ -6,6 +6,8 @@ import { PostPage } from './pages/PostPage'
 import { PostDetailPage } from './pages/PostDetailPage'
 import { CreatePostPage } from './pages/CreatePostPage'
 import { UpdatePostPage } from './pages/UpdatePostPage'
+import { MainLayout } from './layouts/MainLayout'
+import { MyInfoPage } from './pages/MyInfoPage'
 
 function App() {
   return (
@@ -13,12 +15,15 @@ function App() {
       <Routes>
         <Route path='/login' element={<LoginPage />}></Route>
         <Route path='/signUp' element={<SignUpPage />}></Route>
-        <Route path='/posts' element={<PostPage />}></Route>
-        <Route path='/posts/:postId' element={<PostDetailPage />}></Route>
-        <Route path='/posts/create' element={<CreatePostPage />}></Route>
-        <Route path='/posts/:postId/comments' element={<PostDetailPage />}></Route>
-        <Route path='/posts/:postId/update' element={<UpdatePostPage />}> </Route>
 
+        <Route element={<MainLayout />}>
+          <Route path='/posts' element={<PostPage />}></Route>
+          <Route path='/posts/:postId' element={<PostDetailPage />}></Route>
+          <Route path='/posts/create' element={<CreatePostPage />}></Route>
+          <Route path='/posts/:postId/comments' element={<PostDetailPage />}></Route>
+          <Route path='/posts/:postId/update' element={<UpdatePostPage />}> </Route>
+          <Route path='/mypage' element={<MyInfoPage />}></Route>
+        </Route>
 
         <Route path='*' element={<LoginPage />}></Route>
       </Routes>

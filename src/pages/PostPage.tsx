@@ -21,7 +21,7 @@ export function PostPage() {
     }, [])
 
     return (
-        <div style={{ display: 'flex', flexDirection: "column", gap: '16px', alignItems: 'center', minHeight: '100vh', padding: '24px', background: '#f5f5f5' }}>
+        <div style={{ display: 'flex', flexDirection: "column", gap: '16px', alignItems: 'center', minHeight: 'calc(100vh - 60px)', padding: '24px', background: '#f5f5f5' }}>
             <h2>게시글 화면</h2>
 
             {posts.map((post) => (
@@ -51,7 +51,7 @@ export function PostPage() {
                 }}
                 style={{
                     position: "fixed",
-                    bottom: "24px",
+                    bottom: "84px",
                     padding: "14px 28px",
                     borderRadius: "999px",
                     border: "none",
