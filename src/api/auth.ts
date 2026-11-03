@@ -1,4 +1,4 @@
-import type { GetCommentResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest } from "../types/auth";
+import type { GetCommentResponse, GetMyInfoResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest } from "../types/auth";
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     const response = await fetch('/api/users/login', {
@@ -274,4 +274,22 @@ export const uploadImage = async(file:File)=>{
     else{
         throw new Error("이미지 업로드 실패")
     }
+}
+
+export const getInfo = async():Promise<GetMyInfoResponse>=>{
+    const token = localStorage.getItem("accessToken")
+
+    const response = await fetch(`/api/users/me`,{
+        method:'GET',
+        headers:{
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    if(response.ok){
+        return response.json()
+    }
+    else{
+        throw new Error("내 정보 조회 실패")
+    }
+
 }

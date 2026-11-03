@@ -54,3 +54,8 @@ export interface GetCommentResponse {
 export interface UploadImageResponse{
   imageUrl:string
 }
+export interface GetMyInfoResponse {
+  id: number,
+  email: string,
+  name: string
+}
