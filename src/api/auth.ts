@@ -29,6 +29,9 @@ export const signUp = async (data: SignUpRequest) => {
     if (response.ok) {
         return
     }
+    else if(response.status==409){
+        throw new Error("이미 사용중인 계정입니다.")
+    }
     else {
         throw new Error("회원가입 실패")
     }
