@@ -21,7 +21,7 @@ export function PostPage() {
     }, [])
 
     return (
-        <div style={{ display: 'flex', flexDirection: "column", gap: '16px', alignItems: 'center', minHeight: 'calc(100vh - 60px)', padding: '24px', background: '#f5f5f5' }}>
+        <div style={{ display: 'flex', flexDirection: "column", gap: '16px', alignItems: 'center', padding: '24px', background: '#f5f5f5' }}>
             <h2>게시글 화면</h2>
 
             {posts.map((post) => (
@@ -46,7 +46,8 @@ export function PostPage() {
             ))}
 
             <button
-                onClick={() => {navigate("/posts/create")
+                onClick={() => {
+                    navigate("/posts/create")
 
                 }}
                 style={{

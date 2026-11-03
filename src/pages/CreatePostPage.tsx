@@ -41,14 +41,11 @@ export function CreatePostPage() {
 
 
     return (
-        <div>
             <div style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                minHeight: "100vh",
                 padding: "24px",
-                background: "#f5f5f5"
             }}>
 
                 <form style={{
@@ -108,6 +105,5 @@ export function CreatePostPage() {
                     >제출하기</button>
                 </form>
             </div>
-        </div>
     )
 }

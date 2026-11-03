@@ -114,9 +114,7 @@ export function PostDetailPage() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            minHeight: "100vh",
             padding: "24px",
-            background: "#f5f5f5"
         }}>
             <div style={{
                 width: "100%",
