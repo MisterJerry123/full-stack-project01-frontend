@@ -1,24 +1,64 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { type getPostResponse } from "../types/auth"
 import { useNavigate } from "react-router-dom"
-import { getPost, getPosts } from "../api/auth"
+import { getPosts } from "../api/auth"
 
 export function PostPage() {
     const [posts, setPosts] = useState<getPostResponse[]>([])
+
+    const [page, setPage] = useState<number>(0)
+    const [hasMorePage, setHasMorePage] = useState<boolean>(true)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const observerRef = useRef<HTMLDivElement>(null)
+
     const navigate = useNavigate()
 
+    const loadPost = async () => {
+        if (isLoading || !hasMorePage) {
+            return
+        }
+        setIsLoading(true)
+        try {
+            const data = await getPosts(page)
+            setPosts(prev => [
+                ...prev,
+                ...data.posts
+            ])
+            setPage(prev => prev + 1)
+            if (page + 1 >= data.totalPages) {
+                setHasMorePage(false)
+            }
+        } catch (error) {
+            alert((error as Error).message)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
-        getPosts(0)
-            .then((data) => {
-                setPosts(data.posts)
-            })
-            .catch((error) => {
-                alert((error as Error).message)
-                if (!localStorage.getItem('accessToken')) {
-                    navigate('/login')
-                }
-            })
-    }, [])
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                loadPost()
+            }
+        })
+        if (observerRef.current) {
+            observer.observe(observerRef.current)
+        }
+        return () => observer.disconnect()
+    }, [hasMorePage, isLoading, page])
+
+    // useEffect(() => {
+    //     getPosts(0)
+    //         .then((data) => {
+    //             setPosts(data.posts)
+    //         })
+    //         .catch((error) => {
+    //             alert((error as Error).message)
+    //             if (!localStorage.getItem('accessToken')) {
+    //                 navigate('/login')
+    //             }
+    //         })
+    // }, [])
 
     return (
         <div style={{ display: 'flex', flexDirection: "column", gap: '16px', alignItems: 'center', padding: '24px', background: '#f5f5f5' }}>
@@ -44,6 +84,19 @@ export function PostPage() {
                     </small>
                 </div>
             ))}
+            <div ref={observerRef} style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '0 0 60px 0',
+                minHeight: '60px'
+            }}>
+                {isLoading && <div className="spinner" />}
+                {!hasMorePage && posts.length > 0 && (
+                    <span style={{ color: '#9ca3af', fontSize: '14px' }}>모든 게시글을 다 읽었습니다</span>
+                )}
+            </div>
 
             <button
                 onClick={() => {
