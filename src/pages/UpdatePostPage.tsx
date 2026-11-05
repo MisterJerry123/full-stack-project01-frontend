@@ -1,6 +1,6 @@
 import { Form, useLocation, useNavigate, useParams } from "react-router-dom"
-import { createPost, updatePost } from "../api/auth"
-import { useState } from "react"
+import { createPost, updatePost, uploadImage } from "../api/auth"
+import { useState, type ChangeEvent } from "react"
 import type { getPostResponse, PostRequest } from "../types/auth"
 
 export function UpdatePostPage() {
@@ -23,7 +23,7 @@ export function UpdatePostPage() {
                 imageUrl: imageUrl
             }
             const response = await updatePost(Number(postId), request)
-            navigate('/posts')
+            navigate(`/posts/${postId}`)
 
         } catch (error) {
             alert((error as Error).message)
@@ -31,7 +31,18 @@ export function UpdatePostPage() {
 
     }
 
-
+    const handleChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) {
+            return
+        }
+        try {
+            const response = await uploadImage(file)
+            setImageUrl(response.imageUrl)
+        } catch (error) {
+            alert((error as Error).message)
+        }
+    }
 
     return (
         <div style={{
@@ -61,6 +72,18 @@ export function UpdatePostPage() {
                         borderRadius: "8px",
                         border: "1px solid #ddd",
                     }} placeholder="제목을 입력하세요."></input>
+
+                <input type="file" accept="image/*" onChange={handleChangeImage} />
+
+                {imageUrl && (
+                    <div style={{ position: "relative", display: "inline-block", alignSelf: 'flex-start' }}>
+                        <img src={imageUrl}
+                            alt="이미지 미리보기"
+                            style={{ maxWidth: "100%", maxHeight: "250px", borderRadius: "8px", objectFit: "contain" }}
+                        ></img>
+                        <button style={{ position: "absolute", top: '8px', right: '8px' }} onClick={() => setImageUrl("")}>이미지 삭제 </button>
+                    </div>
+                )}
 
                 <textarea
                     value={content}
