@@ -210,7 +210,7 @@ export function PostDetailPage() {
                 }}>
                     <span style={{ cursor: "pointer" }} onClick={handlePostLike}>{post?.isLiked ? '❤️' : '🤍'}</span>
                     <span> 좋아요 {post?.totalLikes}개 </span>
-                    <span>| 댓글 {comments.length}개 </span>
+                    <span>| 댓글 {post?.totalComments}개 </span>
 
                 </div>
 
