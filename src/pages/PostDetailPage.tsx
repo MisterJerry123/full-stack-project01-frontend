@@ -30,12 +30,15 @@ export function PostDetailPage() {
         }
     }
 
-    const handleCreatePost = async () => {
+    const handleCreateComment = async () => {
         try {
             const data = await createComment(Number(postId), comment)
             setComment("")
             const updated = await getComments(Number(postId))
             setComments(updated)
+            if (post) {
+                setPost({ ...post, totalComments: post.totalComments + 1 })
+            }
         } catch (error) {
             alert((error as Error).message)
         }
@@ -59,6 +62,9 @@ export function PostDetailPage() {
         try {
             const response = await deleteComment(Number(postId), commentId)
             setComments(comments.filter((comment) => comment.id !== commentId))
+            if (post) {
+                setPost({ ...post, totalComments: post?.totalComments - 1 })
+            }
         }
         catch (error) {
             alert((error as Error).message)
@@ -322,7 +328,7 @@ export function PostDetailPage() {
                         color: "white",
                         fontWeight: "bold",
                         cursor: "pointer"
-                    }} onClick={handleCreatePost}>작성</button>
+                    }} onClick={handleCreateComment}>작성</button>
                 </div>
             </div>
         </div>
