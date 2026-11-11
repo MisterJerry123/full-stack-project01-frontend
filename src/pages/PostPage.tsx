@@ -9,15 +9,18 @@ export function PostPage() {
     const [page, setPage] = useState<number>(0)
     const [hasMorePage, setHasMorePage] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isError, setIsError] = useState<boolean>(false)
+
     const observerRef = useRef<HTMLDivElement>(null)
 
     const navigate = useNavigate()
 
     const loadPost = async () => {
-        if (isLoading || !hasMorePage) {
+        if (isLoading || !hasMorePage || isError) {
             return
         }
         setIsLoading(true)
+        setIsError(false)
         try {
             const data = await getPosts(page)
             setPosts(prev => [
@@ -29,6 +32,7 @@ export function PostPage() {
                 setHasMorePage(false)
             }
         } catch (error) {
+            setIsError(true)
             alert((error as Error).message)
         } finally {
             setIsLoading(false)
@@ -36,6 +40,9 @@ export function PostPage() {
     }
 
     useEffect(() => {
+        if (isError) {
+            return
+        }
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
                 loadPost()
@@ -45,7 +52,7 @@ export function PostPage() {
             observer.observe(observerRef.current)
         }
         return () => observer.disconnect()
-    }, [hasMorePage, isLoading, page])
+    }, [hasMorePage, isLoading, page, isError])
 
     // useEffect(() => {
     //     getPosts(0)
@@ -93,6 +100,27 @@ export function PostPage() {
                 minHeight: '60px'
             }}>
                 {isLoading && <div className="spinner" />}
+                {isError && (
+                    <div style={{ textAlign: 'center', padding: '16px' }}>
+                        <p style={{ color: '#ef4444', fontSize: '14px', margin: '0 0 8px 0' }}>네트워크 연결에 실패했습니다.</p>
+                        <button
+                            onClick={() => {
+                                setIsError(false)
+                                loadPost()
+                            }}
+                            style={{
+                                padding: '8px 16px',
+                                borderRadius: '8px',
+                                border: '1px solid #d1d5db',
+                                background: 'white',
+                                cursor: 'pointer',
+                                fontSize: '14px'
+                            }}
+                        >
+                            🔄 다시 시도
+                        </button>
+                    </div>
+                )}
                 {!hasMorePage && posts.length > 0 && (
                     <span style={{ color: '#9ca3af', fontSize: '14px' }}>모든 게시글을 다 읽었습니다</span>
                 )}
