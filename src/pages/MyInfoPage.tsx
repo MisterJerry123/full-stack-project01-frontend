@@ -118,7 +118,7 @@ export function MyInfoPage() {
             </div>
             <div style={{ width: '100%', maxWidth: '480px' }}>
                 <button
-                    onClick={()=>navigate("/mypage/edit")}
+                    onClick={() => navigate("/mypage/edit", { state: { email, name } })}
                     style={{
                         width: '100%',
                         padding: '14px 0',
