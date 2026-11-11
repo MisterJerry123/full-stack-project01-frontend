@@ -17,7 +17,7 @@ export interface getPostResponse {
   title: string
   content: string
   authorName: string,
-  authorId:number,
+  authorId: number,
   createdAt: string
   updatedAt: string
   imageUrl?: string | null
@@ -51,11 +51,15 @@ export interface GetCommentResponse {
   createdAt: string,
   updatedAt: string,
 }
-export interface UploadImageResponse{
-  imageUrl:string
+export interface UploadImageResponse {
+  imageUrl: string
 }
 export interface GetMyInfoResponse {
   id: number,
   email: string,
   name: string
+}
+export interface UpdateInfoRequest {
+  email: string | null,
+  name: string | null
 }

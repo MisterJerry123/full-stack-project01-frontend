@@ -118,10 +118,29 @@ export function MyInfoPage() {
             </div>
             <div style={{ width: '100%', maxWidth: '480px' }}>
                 <button
+                    onClick={()=>navigate("/mypage/edit")}
+                    style={{
+                        width: '100%',
+                        padding: '14px 0',
+                        marginBottom: '20px',
+                        background: '#f3f2fe',
+                        color: '#4463ef',
+                        border: '1px solid #cad3fe',
+                        borderRadius: '12px',
+                        fontSize: '15px',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        transition: 'background 0.2s'
+                    }}
+                >
+                    🚪 내 정보 변경
+                </button>
+
+                <button
                     onClick={handleLogout}
                     style={{
                         width: '100%',
-                        padding: '14px',
+                        padding: '14px 0',
                         background: '#fef2f2',
                         color: '#ef4444',
                         border: '1px solid #fecaca',

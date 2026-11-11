@@ -8,6 +8,7 @@ import { CreatePostPage } from './pages/CreatePostPage'
 import { UpdatePostPage } from './pages/UpdatePostPage'
 import { MainLayout } from './layouts/MainLayout'
 import { MyInfoPage } from './pages/MyInfoPage'
+import { UpdateInfoPage } from './pages/UpdateInfoPage'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/posts/:postId/comments' element={<PostDetailPage />}></Route>
           <Route path='/posts/:postId/update' element={<UpdatePostPage />}> </Route>
           <Route path='/mypage' element={<MyInfoPage />}></Route>
+          <Route path='/mypage/edit' element={<UpdateInfoPage />}></Route>
         </Route>
 
         <Route path='*' element={<LoginPage />}></Route>
