@@ -1,7 +1,7 @@
 import { Form, useNavigate } from "react-router-dom"
-import { createPost, uploadImage } from "../api/auth"
+import { createPost, uploadImage } from "../../data/api/auth";
 import { useState, type ChangeEvent } from "react"
-import type { PostRequest } from "../types/auth"
+import type { PostRequest } from "../../domain/models/auth"
 
 export function CreatePostPage() {
     const [title, setTitle] = useState<string>('')

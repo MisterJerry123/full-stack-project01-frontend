@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { LoginPage } from './pages/LoginPage'
-import { SignUpPage } from './pages/SignUpPage'
-import { PostPage } from './pages/PostPage'
-import { PostDetailPage } from './pages/PostDetailPage'
-import { CreatePostPage } from './pages/CreatePostPage'
-import { UpdatePostPage } from './pages/UpdatePostPage'
-import { MainLayout } from './layouts/MainLayout'
-import { MyInfoPage } from './pages/MyInfoPage'
-import { UpdateInfoPage } from './pages/UpdateInfoPage'
+import { LoginPage } from './presentation/pages/LoginPage'
+import { SignUpPage } from './presentation/pages/SignUpPage'
+import { PostPage } from './presentation/pages/PostPage'
+import { PostDetailPage } from './presentation/pages/PostDetailPage'
+import { CreatePostPage } from './presentation/pages/CreatePostPage'
+import { UpdatePostPage } from './presentation/pages/UpdatePostPage'
+import { MyInfoPage } from './presentation/pages/MyInfoPage'
+import { UpdateInfoPage } from './presentation/pages/UpdateInfoPage'
+import { MainLayout } from './presentation/layouts/MainLayout'
 
 function App() {
   return (

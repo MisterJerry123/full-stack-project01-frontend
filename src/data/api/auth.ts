@@ -1,4 +1,4 @@
-import type { GetCommentResponse, GetMyInfoResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest, UpdateInfoRequest } from "../types/auth";
+import type { GetCommentResponse, GetMyInfoResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest, UpdateInfoRequest } from "../../domain/models/auth"
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     const response = await fetch('/api/users/login', {

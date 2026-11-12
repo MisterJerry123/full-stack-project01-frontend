@@ -1,7 +1,7 @@
 import { Form, useLocation, useNavigate, useParams } from "react-router-dom"
-import { createPost, updatePost, uploadImage } from "../api/auth"
+import { createPost, updatePost, uploadImage } from "../../data/api/auth";
 import { useState, type ChangeEvent } from "react"
-import type { getPostResponse, PostRequest } from "../types/auth"
+import type { getPostResponse, PostRequest } from "../../domain/models/auth"
 
 export function UpdatePostPage() {
     const { postId } = useParams()

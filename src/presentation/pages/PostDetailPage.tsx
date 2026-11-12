@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { GetCommentResponse, getPostResponse } from "../types/auth";
-import { createComment, deleteComment, deletePost, getComments, getPost, togglePostLike, updateComment, updatePost } from "../api/auth";
+import type { GetCommentResponse, getPostResponse } from "../../domain/models/auth";
+import { createComment, deleteComment, deletePost, getComments, getPost, togglePostLike, updateComment, updatePost } from "../../data/api/auth";
 
 export function PostDetailPage() {
     const { postId } = useParams()

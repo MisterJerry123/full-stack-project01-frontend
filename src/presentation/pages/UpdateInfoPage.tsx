@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { changeInfo, getInfo } from "../api/auth"
+import { changeInfo, getInfo } from "../../data/api/auth";
 
 export function UpdateInfoPage() {
     const navigate = useNavigate()

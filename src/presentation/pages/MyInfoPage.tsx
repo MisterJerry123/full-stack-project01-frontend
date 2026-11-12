@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { getInfo } from "../api/auth"
+import { getInfo } from "../../data/api/auth";
 import { useEffect, useState } from "react"
 
 export function MyInfoPage() {

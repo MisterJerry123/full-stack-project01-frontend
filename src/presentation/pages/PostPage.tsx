@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react"
-import { type getPostResponse } from "../types/auth"
+import { type getPostResponse } from "../../domain/models/auth"
 import { useNavigate } from "react-router-dom"
-import { getPosts } from "../api/auth"
-
+import { getPosts } from "../../data/api/auth";
 export function PostPage() {
     const [posts, setPosts] = useState<getPostResponse[]>([])
 

@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { BottomNav } from "../components/BottomNav";
 import { useEffect } from "react";
+import { BottomNav } from "../components/BottomNav";
 
 export function MainLayout() {
     const navigate = useNavigate()
