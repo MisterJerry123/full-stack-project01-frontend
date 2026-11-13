@@ -83,6 +83,7 @@ export const getPosts = async (page: number): Promise<getPostsResponse> => {
     }
     else if (response.status == 401) {
         localStorage.removeItem('accessToken')
+        window.location.href = '/login'
         throw new Error("로그인이 필요합니다!")
     }
     else {
@@ -303,13 +304,13 @@ export const changeInfo = async (updateInfoRequest: UpdateInfoRequest) => {
         },
         body: JSON.stringify(updateInfoRequest)
     })
-    if(response.ok){
+    if (response.ok) {
         return
     }
-    else if(response.status==409){
+    else if (response.status == 409) {
         throw new Error("이미 존재하는 이메일입니다.")
     }
-    else{
+    else {
         throw new Error("내 정보 변경 실패")
     }
 
