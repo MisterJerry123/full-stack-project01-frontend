@@ -1,4 +1,4 @@
-import type { GetCommentResponse, GetMyInfoResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest, UpdateInfoRequest } from "../../domain/models/auth"
+import type { GetChatsResponse, GetCommentResponse, GetMyInfoResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest, UpdateInfoRequest } from "../../domain/models/auth"
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     const response = await fetch('/api/users/login', {
@@ -312,6 +312,24 @@ export const changeInfo = async (updateInfoRequest: UpdateInfoRequest) => {
     }
     else {
         throw new Error("내 정보 변경 실패")
+    }
+
+}
+
+export const getMyChattingRooms = async():Promise<GetChatsResponse>=>{
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch("/api/chats", {
+        method:"GET",
+        headers:{
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+    if(response.ok){
+        return response.json()
+    }
+    else{
+        throw new Error("내 채팅방 불러오기 실패")
     }
 
 }

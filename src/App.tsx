@@ -9,6 +9,7 @@ import { UpdatePostPage } from './presentation/pages/UpdatePostPage'
 import { MyInfoPage } from './presentation/pages/MyInfoPage'
 import { UpdateInfoPage } from './presentation/pages/UpdateInfoPage'
 import { MainLayout } from './presentation/layouts/MainLayout'
+import { ChattingPage } from './presentation/pages/ChattingPage'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/posts/:postId/update' element={<UpdatePostPage />}> </Route>
           <Route path='/mypage' element={<MyInfoPage />}></Route>
           <Route path='/mypage/edit' element={<UpdateInfoPage />}></Route>
+          <Route path='chat' element={<ChattingPage />}></Route>
         </Route>
 
         <Route path='*' element={<LoginPage />}></Route>

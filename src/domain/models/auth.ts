@@ -63,3 +63,13 @@ export interface UpdateInfoRequest {
   email: string | null,
   name: string | null
 }
+export interface GetChatResponse{
+  id:number,
+  partnerName:String,
+  createdAt:string,
+  lastMessage:string,
+  lastMessageCreatedAt:string
+}
+export interface GetChatsResponse{
+  chattingRooms: GetChatResponse[]
+}
