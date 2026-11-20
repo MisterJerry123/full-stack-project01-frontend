@@ -46,7 +46,7 @@ export function BottomNav() {
             >
                 👤 마이페이지
             </button>
-            <button onClick={() => { navigate("/chat") }}
+            <button onClick={() => { navigate("/chats") }}
                 style={{
                     flex: 1,
                     height: '100%',
@@ -55,7 +55,7 @@ export function BottomNav() {
                     fontSize: '14px',
                     fontWeight: 'bold',
                     cursor: 'pointer',
-                    color: location.pathname.startsWith('/chat') ? '#3b82f6' : '#888'
+                    color: location.pathname.startsWith('/chats') ? '#3b82f6' : '#888'
                 }}
             >
                 💬 채팅

@@ -1,4 +1,4 @@
-import type { GetChatsResponse, GetCommentResponse, GetMyInfoResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest, UpdateInfoRequest } from "../../domain/models/auth"
+import type { GetChatsResponse, GetChattingRoomsResponse, GetCommentResponse, GetMyInfoResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest, UpdateInfoRequest } from "../../domain/models/auth"
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     const response = await fetch('/api/users/login', {
@@ -316,7 +316,7 @@ export const changeInfo = async (updateInfoRequest: UpdateInfoRequest) => {
 
 }
 
-export const getMyChattingRooms = async():Promise<GetChatsResponse>=>{
+export const getMyChattingRooms = async():Promise<GetChattingRoomsResponse>=>{
     const token = localStorage.getItem("accessToken")
     const response = await fetch("/api/chats", {
         method:"GET",
@@ -333,3 +333,4 @@ export const getMyChattingRooms = async():Promise<GetChatsResponse>=>{
     }
 
 }
+

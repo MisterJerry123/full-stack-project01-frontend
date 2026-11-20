@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import type { GetChatResponse, GetChatsResponse } from "../../domain/models/auth"
+import type { GetChattingRoomResponse, GetChattingRoomsResponse } from "../../domain/models/auth"
 import { getMyChattingRooms } from "../../data/api/auth"
 import { useNavigate } from "react-router-dom"
 
 export function ChattingPage() {
-    const [chattingRooms, setChattingRooms] = useState<GetChatResponse[]>([])
+    const [chattingRooms, setChattingRooms] = useState<GetChattingRoomResponse[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const navigate = useNavigate()
 
@@ -67,7 +67,7 @@ export function ChattingPage() {
                     chattingRooms.map((room) => (
                         <div
                             key={room.id}
-                            onClick={() => navigate(`/chats/${room.id}`)}
+                            onClick={() => navigate(`/chats/${room.id}`, {state:room})}
                             style={{
                                 display: "flex",
                                 alignItems: "center",

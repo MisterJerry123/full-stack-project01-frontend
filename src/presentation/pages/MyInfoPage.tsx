@@ -8,7 +8,7 @@ export function MyInfoPage() {
     const [id, setId] = useState<number>(0)
     const [email, setEmail] = useState<string>("")
     const [name, setName] = useState<string>("")
-
+    console.log("마이페이지 도달")
 
     const handleLogout = () => {
         if (!window.confirm("로그아웃 하시겠습니까?")) {
