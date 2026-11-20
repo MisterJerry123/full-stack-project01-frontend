@@ -60,6 +60,9 @@ export function ChattingRoomPage() {
             <div>
                 <input value={content} onChange={(e) => { setContent(e.target.value) }}></input>
                 <button onClick={() => {
+
+                    console.log("send click", clientRef.current?.connected, chattingRoom.id, content.length)
+
                     clientRef.current?.publish({
                         destination: '/pub/message', body: JSON.stringify({
                             chattingRoomId: chattingRoom.id,
