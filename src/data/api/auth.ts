@@ -334,3 +334,19 @@ export const getMyChattingRooms = async():Promise<GetChattingRoomsResponse>=>{
 
 }
 
+export const pastChats = async(chattingRoomId:number):Promise<GetChatsResponse>=>{
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch(`/api/chats/${chattingRoomId}/messages`,{
+        method:'GET',
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    if(response.ok){
+        return response.json()
+    }
+        else{
+        throw new Error("과거 채팅 불러오기 실패")
+    }
+}
+

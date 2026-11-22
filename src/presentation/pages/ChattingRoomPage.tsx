@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import type { GetChatResponse, GetChattingRoomResponse } from "../../domain/models/auth"
 import { Client } from "@stomp/stompjs"
 import { useLocation } from "react-router-dom"
+import { pastChats } from "../../data/api/auth"
 
 export function ChattingRoomPage() {
     const location = useLocation()
@@ -11,6 +12,11 @@ export function ChattingRoomPage() {
     const [chattingRoom, setChattingRoom] = useState<GetChattingRoomResponse>(location.state)
     const clientRef = useRef<Client | null>(null)
 
+    useEffect(() => {
+        pastChats(chattingRoom.id)
+            .then((data) => setChats(data.chats))
+            .catch((error) => alert(error.message))
+    }, [chattingRoom.id])
 
     useEffect(() => {
         const client = new Client({
@@ -57,6 +63,15 @@ export function ChattingRoomPage() {
     return (
         <div>
             <h2>채팅 디테일 페이지</h2>
+
+            {chats.map((chat) => (
+                <div>
+                    <strong>{chat.writerName}</strong>
+                    <p>{chat.content}</p>
+                    <small>{chat.createdAt}</small>
+                </div>
+            ))}
+
             <div>
                 <input value={content} onChange={(e) => { setContent(e.target.value) }}></input>
                 <button onClick={() => {
