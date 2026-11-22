@@ -39,7 +39,10 @@ export function ChattingRoomPage() {
                 const subscription = client.subscribe(
                     `/sub/api/chats/${chattingRoom.id}`,
                     (message) => {
-                        const payload = JSON.parse(message.body)
+                        const newChat: GetChatResponse = JSON.parse(message.body)
+                        setChats((prev) =>
+                            prev.some((chat) => chat.id === newChat.id) ? prev : [...prev, newChat]
+                        )
                     }
                 )
                 console.log("connect에 도달")
@@ -65,7 +68,7 @@ export function ChattingRoomPage() {
             <h2>채팅 디테일 페이지</h2>
 
             {chats.map((chat) => (
-                <div>
+                <div key={chat.id}>
                     <strong>{chat.writerName}</strong>
                     <p>{chat.content}</p>
                     <small>{chat.createdAt}</small>
@@ -78,12 +81,19 @@ export function ChattingRoomPage() {
 
                     console.log("send click", clientRef.current?.connected, chattingRoom.id, content.length)
 
+                    if (!(clientRef.current?.connected)) {
+                        alert("채팅 서버에 연결 안됨")
+                        return
+                    }
+
                     clientRef.current?.publish({
                         destination: '/pub/message', body: JSON.stringify({
                             chattingRoomId: chattingRoom.id,
                             content
                         })
                     })
+
+                    setContent("")
                 }}>전송</button>
             </div>
         </div>
