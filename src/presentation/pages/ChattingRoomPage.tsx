@@ -70,7 +70,8 @@ export function ChattingRoomPage() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            height: "calc(100dvh - 60px)"
+            height: "calc(100dvh - 60px)",
+            padding:"24px 16px"
         }}>
             <h2>채팅 디테일 페이지</h2>
             <div style={{
@@ -88,7 +89,12 @@ export function ChattingRoomPage() {
                     chat.writerId === userId ? (
                         <div style={{
                             alignSelf: "end",
-                            textAlign: "end"
+                            textAlign: "end",
+                            borderRadius: "16px",
+                            background: "white",
+                            border: '1px solid #d1d5db',
+                            margin: "10px 10px",
+                            padding: "10px 10px",
                         }} key={chat.id}>
                             <strong>{chat.writerName}</strong>
                             <p>{chat.content}</p>
@@ -97,7 +103,12 @@ export function ChattingRoomPage() {
                     ) : (
                         <div style={{
                             alignSelf: "start",
-                            textAlign: "start"
+                            textAlign: "start",
+                            borderRadius: "16px",
+                            border: '1px solid #d1d5db',
+                            background: "white",
+                            margin: "10px 10px",
+                            padding: "10px 10px",
                         }} key={chat.id}>
                             <strong>{chat.writerName}</strong>
                             <p>{chat.content}</p>
