@@ -71,9 +71,10 @@ export function ChattingRoomPage() {
             flexDirection: "column",
             alignItems: "center",
             height: "calc(100dvh - 60px)",
-            padding:"24px 16px"
         }}>
-            <h2>채팅 디테일 페이지</h2>
+            <h2 style={{
+                padding: "24px 16px"
+            }}>채팅 디테일 페이지</h2>
             <div style={{
                 display: "flex",
                 maxWidth: "600px",
@@ -128,9 +129,9 @@ export function ChattingRoomPage() {
                 <div style={{
                     display: "flex",
                     flexDirection: "row",
+                    paddingBottom:"10px",
 
                     minHeight: 0,
-                    margin: "0 auto",
                 }}>
                     <input value={content} style={{
                         padding: '12px 14px',
@@ -139,7 +140,7 @@ export function ChattingRoomPage() {
                         fontSize: '15px',
                         outline: 'none',
                         boxSizing: 'border-box',
-                        flex: 1
+                        flex: 1,
                     }} placeholder="채팅을 입력해주세요." onChange={(e) => { setContent(e.target.value) }}>
                     </input>
                     <button style={{
