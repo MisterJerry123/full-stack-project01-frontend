@@ -11,6 +11,8 @@ export function ChattingRoomPage() {
     const [chats, setChats] = useState<GetChatResponse[]>([])
     const [chattingRoom, setChattingRoom] = useState<GetChattingRoomResponse>(location.state)
     const clientRef = useRef<Client | null>(null)
+    const token = localStorage.getItem("accessToken")?.split(".")[1]
+    const userId = token ? Number(JSON.parse(atob(token)).sub) : null
 
     useEffect(() => {
         pastChats(chattingRoom.id)
@@ -64,37 +66,100 @@ export function ChattingRoomPage() {
 
 
     return (
-        <div>
+        <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "calc(100dvh - 60px)"
+        }}>
             <h2>채팅 디테일 페이지</h2>
+            <div style={{
+                display: "flex",
+                maxWidth: "600px",
+                width: "100%",
+                flex: 1,
+                minHeight: 0,
+                flexDirection: "column",
+                overflowY: "auto"
+            }}>
 
-            {chats.map((chat) => (
-                <div key={chat.id}>
-                    <strong>{chat.writerName}</strong>
-                    <p>{chat.content}</p>
-                    <small>{chat.createdAt}</small>
-                </div>
-            ))}
+                {chats.map((chat) => (
 
-            <div>
-                <input value={content} onChange={(e) => { setContent(e.target.value) }}></input>
-                <button onClick={() => {
+                    chat.writerId === userId ? (
+                        <div style={{
+                            alignSelf: "end",
+                            textAlign: "end"
+                        }} key={chat.id}>
+                            <strong>{chat.writerName}</strong>
+                            <p>{chat.content}</p>
+                            <small>{chat.createdAt.slice(0, 19)}</small>
+                        </div>
+                    ) : (
+                        <div style={{
+                            alignSelf: "start",
+                            textAlign: "start"
+                        }} key={chat.id}>
+                            <strong>{chat.writerName}</strong>
+                            <p>{chat.content}</p>
+                            <small>{chat.createdAt.slice(0, 19)}</small>
+                        </div>
+                    )
 
-                    console.log("send click", clientRef.current?.connected, chattingRoom.id, content.length)
+                ))}
 
-                    if (!(clientRef.current?.connected)) {
-                        alert("채팅 서버에 연결 안됨")
-                        return
-                    }
 
-                    clientRef.current?.publish({
-                        destination: '/pub/message', body: JSON.stringify({
-                            chattingRoomId: chattingRoom.id,
-                            content
+            </div>
+            <div style={{
+                flexShrink: 0,
+                width: "100%",
+                maxWidth: "600px",
+            }}>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "row",
+
+                    minHeight: 0,
+                    margin: "0 auto",
+                }}>
+                    <input value={content} style={{
+                        padding: '12px 14px',
+                        borderRadius: '10px',
+                        border: '1px solid #d1d5db',
+                        fontSize: '15px',
+                        outline: 'none',
+                        boxSizing: 'border-box',
+                        flex: 1
+                    }} placeholder="채팅을 입력해주세요." onChange={(e) => { setContent(e.target.value) }}>
+                    </input>
+                    <button style={{
+                        padding: "12px 18px",
+                        border: "none",
+                        borderRadius: "10px",
+                        background: "#3b82f6",
+                        color: "white",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                        marginLeft: "8px",
+                    }} onClick={() => {
+
+                        console.log("send click", clientRef.current?.connected, chattingRoom.id, content.length)
+
+                        if (!(clientRef.current?.connected)) {
+                            alert("채팅 서버에 연결 안됨")
+                            return
+                        }
+
+                        clientRef.current?.publish({
+                            destination: '/pub/message', body: JSON.stringify({
+                                chattingRoomId: chattingRoom.id,
+                                content
+                            })
                         })
-                    })
 
-                    setContent("")
-                }}>전송</button>
+                        setContent("")
+                    }}>전송</button>
+                </div>
             </div>
         </div>
     )
