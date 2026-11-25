@@ -14,6 +14,7 @@ export function ChattingRoomPage() {
     const token = localStorage.getItem("accessToken")?.split(".")[1]
     const userId = token ? Number(JSON.parse(atob(token)).sub) : null
     const messageEndRef = useRef<HTMLDivElement>(null)
+    const enableAuthScroll = useRef<boolean>(true)
 
     useEffect(() => {
         pastChats(chattingRoom.id)
@@ -63,7 +64,9 @@ export function ChattingRoomPage() {
     }, [chattingRoom.id])
 
     useEffect(() => {
-        messageEndRef.current?.scrollIntoView({ behavior: "smooth" })
+        if (enableAuthScroll.current) {
+            messageEndRef.current?.scrollIntoView({ behavior: "smooth" })
+        }
 
     }, [chats])
 
@@ -89,6 +92,10 @@ export function ChattingRoomPage() {
                 minHeight: 0,
                 flexDirection: "column",
                 overflowY: "auto"
+            }} onScroll={(event) => {
+                const list = event.currentTarget
+                const distanceFromBottom = list.scrollHeight - list.scrollTop - list.clientHeight
+                enableAuthScroll.current = distanceFromBottom < 80
             }} >
 
                 {chats.map((chat) => (
@@ -125,7 +132,6 @@ export function ChattingRoomPage() {
 
                 ))}
                 <div ref={messageEndRef} />
-
 
             </div>
             <div style={{
