@@ -13,6 +13,7 @@ export function ChattingRoomPage() {
     const clientRef = useRef<Client | null>(null)
     const token = localStorage.getItem("accessToken")?.split(".")[1]
     const userId = token ? Number(JSON.parse(atob(token)).sub) : null
+    const messageEndRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         pastChats(chattingRoom.id)
@@ -61,6 +62,11 @@ export function ChattingRoomPage() {
         }
     }, [chattingRoom.id])
 
+    useEffect(() => {
+        messageEndRef.current?.scrollIntoView({ behavior: "smooth" })
+
+    }, [chats])
+
 
 
 
@@ -83,7 +89,7 @@ export function ChattingRoomPage() {
                 minHeight: 0,
                 flexDirection: "column",
                 overflowY: "auto"
-            }}>
+            }} >
 
                 {chats.map((chat) => (
 
@@ -118,6 +124,7 @@ export function ChattingRoomPage() {
                     )
 
                 ))}
+                <div ref={messageEndRef} />
 
 
             </div>
@@ -129,7 +136,7 @@ export function ChattingRoomPage() {
                 <div style={{
                     display: "flex",
                     flexDirection: "row",
-                    paddingBottom:"10px",
+                    paddingBottom: "10px",
 
                     minHeight: 0,
                 }}>
