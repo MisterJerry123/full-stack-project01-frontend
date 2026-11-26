@@ -166,24 +166,29 @@ export function ChattingRoomPage() {
                         fontWeight: "bold",
                         cursor: "pointer",
                         marginLeft: "8px",
-                    }} onClick={() => {
+                    }}
+                        disabled={!(content.trim())}
+                        onClick={() => {
 
-                        console.log("send click", clientRef.current?.connected, chattingRoom.id, content.length)
+                            console.log("send click", clientRef.current?.connected, chattingRoom.id, content.length)
 
-                        if (!(clientRef.current?.connected)) {
-                            alert("채팅 서버에 연결 안됨")
-                            return
-                        }
+                            if (!(clientRef.current?.connected)) {
+                                alert("채팅 서버에 연결 안됨")
+                                return
+                            }
+                            if (content.trim().length <= 0) {
+                                return
+                            }
 
-                        clientRef.current?.publish({
-                            destination: '/pub/message', body: JSON.stringify({
-                                chattingRoomId: chattingRoom.id,
-                                content
+                            clientRef.current?.publish({
+                                destination: '/pub/message', body: JSON.stringify({
+                                    chattingRoomId: chattingRoom.id,
+                                    content
+                                })
                             })
-                        })
 
-                        setContent("")
-                    }}>전송</button>
+                            setContent("")
+                        }}>전송</button>
                 </div>
             </div>
         </div>
