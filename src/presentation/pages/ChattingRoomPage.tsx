@@ -70,6 +70,25 @@ export function ChattingRoomPage() {
 
     }, [chats])
 
+    const sendMessage = () => {
+        if (!(clientRef.current?.connected)) {
+            alert("채팅 서버에 연결 안됨")
+            return
+        }
+        if (content.trim().length <= 0) {
+            return
+        }
+
+        clientRef.current?.publish({
+            destination: '/pub/message', body: JSON.stringify({
+                chattingRoomId: chattingRoom.id,
+                content
+            })
+        })
+
+        setContent("")
+    }
+
 
 
 
@@ -154,7 +173,15 @@ export function ChattingRoomPage() {
                         outline: 'none',
                         boxSizing: 'border-box',
                         flex: 1,
-                    }} placeholder="채팅을 입력해주세요." onChange={(e) => { setContent(e.target.value) }}>
+                    }}
+                        placeholder="채팅을 입력해주세요."
+                        onChange={(e) => { setContent(e.target.value) }}
+                        onKeyDown={(event) => {
+                            if (event.key === "Enter" && !(event.nativeEvent.isComposing)) {
+                                sendMessage()
+                            }
+                        }}
+                    >
                     </input>
                     <button style={{
                         padding: "12px 18px",
@@ -172,23 +199,9 @@ export function ChattingRoomPage() {
 
                             console.log("send click", clientRef.current?.connected, chattingRoom.id, content.length)
 
-                            if (!(clientRef.current?.connected)) {
-                                alert("채팅 서버에 연결 안됨")
-                                return
-                            }
-                            if (content.trim().length <= 0) {
-                                return
-                            }
-
-                            clientRef.current?.publish({
-                                destination: '/pub/message', body: JSON.stringify({
-                                    chattingRoomId: chattingRoom.id,
-                                    content
-                                })
-                            })
-
-                            setContent("")
-                        }}>전송</button>
+                            sendMessage()
+                        }}
+                    >전송</button>
                 </div>
             </div>
         </div>
