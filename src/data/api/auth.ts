@@ -1,4 +1,4 @@
-import type { GetChatsResponse, GetChattingRoomsResponse, GetCommentResponse, GetMyInfoResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest, UpdateInfoRequest } from "../../domain/models/auth"
+import type { CreateChattingRoomRequest, GetChatsResponse, GetChattingRoomResponse, GetChattingRoomsResponse, GetCommentResponse, GetMyInfoResponse, getPostResponse, getPostsResponse, LoginRequest, LoginResponse, postLikeResponse, PostRequest, SignUpRequest, UpdateInfoRequest } from "../../domain/models/auth"
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     const response = await fetch('/api/users/login', {
@@ -316,37 +316,54 @@ export const changeInfo = async (updateInfoRequest: UpdateInfoRequest) => {
 
 }
 
-export const getMyChattingRooms = async():Promise<GetChattingRoomsResponse>=>{
+export const getMyChattingRooms = async (): Promise<GetChattingRoomsResponse> => {
     const token = localStorage.getItem("accessToken")
     const response = await fetch("/api/chats", {
-        method:"GET",
-        headers:{
+        method: "GET",
+        headers: {
             "Authorization": `Bearer ${token}`
         }
     })
 
-    if(response.ok){
+    if (response.ok) {
         return response.json()
     }
-    else{
+    else {
         throw new Error("내 채팅방 불러오기 실패")
     }
 
 }
 
-export const pastChats = async(chattingRoomId:number):Promise<GetChatsResponse>=>{
+export const pastChats = async (chattingRoomId: number): Promise<GetChatsResponse> => {
     const token = localStorage.getItem("accessToken")
-    const response = await fetch(`/api/chats/${chattingRoomId}/messages`,{
-        method:'GET',
-        headers:{
-            'Authorization':`Bearer ${token}`
+    const response = await fetch(`/api/chats/${chattingRoomId}/messages`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
         }
     })
-    if(response.ok){
+    if (response.ok) {
         return response.json()
     }
-        else{
+    else {
         throw new Error("과거 채팅 불러오기 실패")
     }
 }
 
+export const createChattingRoom = async (createChattingRoom: CreateChattingRoomRequest): Promise<GetChattingRoomResponse> => {
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch('/api/chats/create', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(createChattingRoom)
+    })
+    if (response.ok) {
+        return response.json()
+    }
+    else {
+        throw new Error("채팅방 생성 실패")
+    }
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { GetCommentResponse, getPostResponse } from "../../domain/models/auth";
-import { createComment, deleteComment, deletePost, getComments, getPost, togglePostLike, updateComment, updatePost } from "../../data/api/auth";
+import { createChattingRoom, createComment, deleteComment, deletePost, getComments, getPost, togglePostLike, updateComment, updatePost } from "../../data/api/auth";
 
 export function PostDetailPage() {
     const { postId } = useParams()
@@ -84,6 +84,16 @@ export function PostDetailPage() {
         }
     }
 
+    const handleCreateChattingRoom = async (targetId: number) => {
+        try {
+            const response = await createChattingRoom({ targetId })
+            navigate(`/chats/${response.id}`, { state: response })
+
+        } catch (error) {
+            alert((error as Error).message)
+        }
+    }
+
     // const handlerGetComments = async()=>{
     //     try{
     //         const data = await getComments(Number(postId))
@@ -160,7 +170,7 @@ export function PostDetailPage() {
                         alignItems: "center"
                     }}>
                         <small>작성자:{post?.authorName} | 작성일: {(post?.createdAt)?.slice(0, 10)}</small>
-                        {post?.authorId === userId && (
+                        {post?.authorId === userId ? (
                             <div>
                                 <button style={{
                                     padding: "6px 12px",
@@ -185,6 +195,29 @@ export function PostDetailPage() {
                                     cursor: "pointer"
                                 }} onClick={() => { handleDeletePost() }}>삭제</button>
                             </div>
+                        ) : (
+                            <div>
+
+                                <button style={{
+                                    padding: "7px 14px",
+                                    fontSize: "13px",
+                                    fontWeight: "bold",
+                                    color: "#ffffff",
+                                    background: "#3b82f6",
+                                    border: "1px solid #3b82f6",
+                                    borderRadius: "8px",
+                                    cursor: "pointer",
+                                    boxShadow: "0 2px 4px rgba(59, 130, 246, 0.2)",
+                                    transition: "background 0.15s ease, transform 0.15s ease"
+                                }} onClick={() => {
+                                    if (!post?.authorId) {
+                                        return
+                                    }
+                                    handleCreateChattingRoom(post?.authorId)
+
+                                }}>채팅</button>
+                            </div>
+
                         )
                         }
 

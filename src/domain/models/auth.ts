@@ -83,3 +83,6 @@ export interface GetChatResponse {
 export interface GetChatsResponse{
   chats:GetChatResponse[]
 }
+export interface CreateChattingRoomRequest{
+  targetId:number
+}
